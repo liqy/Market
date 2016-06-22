@@ -15,14 +15,14 @@ package com.insthub.ecmobile;
 
 import android.graphics.Bitmap;
 import com.insthub.BeeFramework.BeeFrameworkApp;
-import com.liulishuo.filedownloader.FileDownloader;
-import com.liulishuo.filedownloader.util.FileDownloadHelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.log.LoggerInterceptor;
 
-import java.net.Proxy;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+
 
 public class EcmobileApp extends BeeFrameworkApp
 {
@@ -31,22 +31,6 @@ public class EcmobileApp extends BeeFrameworkApp
     @Override
     public void onCreate() {
         super.onCreate();
-
-
-        FileDownloader.init(getApplicationContext(),
-                new FileDownloadHelper.OkHttpClientCustomMaker() { // is not has to provide.
-                    @Override
-                    public OkHttpClient customMake() {
-                        // just for OkHttpClient customize.
-                        final OkHttpClient.Builder builder = new OkHttpClient.Builder();
-                        // you can set the connection timeout.
-                        builder.connectTimeout(15_000, TimeUnit.MILLISECONDS);
-                        // you can set the HTTP proxy.
-                        builder.proxy(Proxy.NO_PROXY);
-                        // etc.
-                        return builder.build();
-                    }
-                });
 
         options = new DisplayImageOptions.Builder()
                 .showStubImage(R.drawable.default_image)			// 设置图片下载期间显示的图片
@@ -66,5 +50,14 @@ public class EcmobileApp extends BeeFrameworkApp
                 .cacheOnDisc(true)							// 设置下载的图片是否缓存在SD卡中
                         //.displayer(new RoundedBitmapDisplayer(30))	// 设置成圆角图片
                 .build();
+
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(new LoggerInterceptor("OKHTTP"))
+                .connectTimeout(10000L, TimeUnit.MILLISECONDS)
+                .readTimeout(10000L, TimeUnit.MILLISECONDS)
+                //其他配置
+                .build();
+
+        OkHttpUtils.initClient(okHttpClient);
     }
 }
