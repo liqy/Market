@@ -53,13 +53,13 @@ public class VRVideoAdapter extends RecyclerView.Adapter<VRVideoAdapter.ViewHold
                 .error(R.drawable.default_image)
                 .into(holder.vr_image_thumb);
 
-        holder.vr_video_title.setText(video.title);
-        holder.vr_video_desc.setText(video.desc);
+//        holder.vr_video_title.setText(video.title);
+//        holder.vr_video_desc.setText(video.desc);
 
     }
 
-    public VRVideo getItem(int position){
-        return this.videos.get(position-1);
+    public VRVideo getItem(int position) {
+        return this.videos.get(position);
     }
 
     @Override
@@ -76,14 +76,14 @@ public class VRVideoAdapter extends RecyclerView.Adapter<VRVideoAdapter.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView vr_image_thumb;
-        public TextView vr_video_title;
-        public TextView vr_video_desc;
+//        public TextView vr_video_title;
+//        public TextView vr_video_desc;
 
         public ViewHolder(View view) {
             super(view);
             vr_image_thumb = (ImageView) view.findViewById(R.id.vr_image_thumb);
-            vr_video_desc = (TextView) view.findViewById(R.id.vr_video_desc);
-            vr_video_title = (TextView) view.findViewById(R.id.vr_video_title);
+//            vr_video_desc = (TextView) view.findViewById(R.id.vr_video_desc);
+//            vr_video_title = (TextView) view.findViewById(R.id.vr_video_title);
         }
     }
 }

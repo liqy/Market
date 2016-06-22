@@ -3,28 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingTop="4dp">
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="8dp">
 
     <ImageView
         android:id="@+id/vr_image_thumb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="160dp"
+        android:minHeight="120dp"
         android:scaleType="centerCrop"
+        android:background="@drawable/item_vr_video_bg"
         android:src="@drawable/default_image" />
 
-    <TextView
-        android:id="@+id/vr_video_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:textColor="@android:color/black"
-        android:textSize="16sp" />
+    <!--<TextView-->
+        <!--android:id="@+id/vr_video_title"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:padding="8dp"-->
+        <!--android:visibility="gone"-->
+        <!--android:textColor="@android:color/black"-->
+        <!--android:textSize="16sp" />-->
 
-    <TextView
-        android:id="@+id/vr_video_desc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp" />
+    <!--<TextView-->
+        <!--android:id="@+id/vr_video_desc"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:visibility="gone"-->
+        <!--android:padding="8dp" />-->
 
 </LinearLayout>
