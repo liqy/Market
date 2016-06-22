@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.insthub.ecmobile.R;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +24,11 @@ public class VRVideoAdapter extends RecyclerView.Adapter<VRVideoAdapter.ViewHold
 
     public ArrayList<VRVideo> videos;
     public FragmentActivity activity;
+    private final Transformation transformation;
 
-    public VRVideoAdapter(FragmentActivity activity) {
+    public VRVideoAdapter(FragmentActivity activity, Transformation transformation) {
         this.activity = activity;
+        this.transformation = transformation;
         this.videos = new ArrayList<>();
     }
 
@@ -51,10 +54,9 @@ public class VRVideoAdapter extends RecyclerView.Adapter<VRVideoAdapter.ViewHold
                 .load(video.pic)
                 .placeholder(R.drawable.default_image)
                 .error(R.drawable.default_image)
+                .fit()
+                .transform(transformation)
                 .into(holder.vr_image_thumb);
-
-//        holder.vr_video_title.setText(video.title);
-//        holder.vr_video_desc.setText(video.desc);
 
     }
 
@@ -76,14 +78,10 @@ public class VRVideoAdapter extends RecyclerView.Adapter<VRVideoAdapter.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView vr_image_thumb;
-//        public TextView vr_video_title;
-//        public TextView vr_video_desc;
 
         public ViewHolder(View view) {
             super(view);
             vr_image_thumb = (ImageView) view.findViewById(R.id.vr_image_thumb);
-//            vr_video_desc = (TextView) view.findViewById(R.id.vr_video_desc);
-//            vr_video_title = (TextView) view.findViewById(R.id.vr_video_title);
         }
     }
 }

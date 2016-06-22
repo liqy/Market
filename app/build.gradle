@@ -42,4 +42,11 @@ dependencies {
     compile 'tv.danmaku.ijk.media:ijkplayer-java:0.5.1'
     compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.5.1'
     compile 'com.github.ashqal:MD360Player4Android:1.4.0'
+
+    compile 'com.makeramen:roundedimageview:2.2.1'
+//    compile 'com.github.fenjuly:ArrowDownloadButton:9e15b85e8a'
+
+    compile 'com.liulishuo.filedownloader:library:0.3.2'
+
+
 }

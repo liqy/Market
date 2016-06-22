@@ -13,12 +13,16 @@ package com.insthub.ecmobile;
 //  Powered by BeeFramework
 //
 
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import com.insthub.BeeFramework.BeeFrameworkApp;
+import com.liulishuo.filedownloader.FileDownloader;
+import com.liulishuo.filedownloader.util.FileDownloadHelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+
+import java.net.Proxy;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
 
 public class EcmobileApp extends BeeFrameworkApp
 {
@@ -28,6 +32,21 @@ public class EcmobileApp extends BeeFrameworkApp
     public void onCreate() {
         super.onCreate();
 
+
+        FileDownloader.init(getApplicationContext(),
+                new FileDownloadHelper.OkHttpClientCustomMaker() { // is not has to provide.
+                    @Override
+                    public OkHttpClient customMake() {
+                        // just for OkHttpClient customize.
+                        final OkHttpClient.Builder builder = new OkHttpClient.Builder();
+                        // you can set the connection timeout.
+                        builder.connectTimeout(15_000, TimeUnit.MILLISECONDS);
+                        // you can set the HTTP proxy.
+                        builder.proxy(Proxy.NO_PROXY);
+                        // etc.
+                        return builder.build();
+                    }
+                });
 
         options = new DisplayImageOptions.Builder()
                 .showStubImage(R.drawable.default_image)			// 设置图片下载期间显示的图片

@@ -2,6 +2,7 @@ package tv.tipsee.vr;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,12 +10,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.insthub.ecmobile.R;
+import com.squareup.picasso.Picasso;
 
 import tv.tipsee.vr.models.VRVideo;
+import tv.tipsee.vr.player.MD360PlayerActivity;
+import tv.tipsee.vr.views.widgets.SquaredImageView;
 
 public class VRVideoInfoActivity extends BaseActivity implements View.OnClickListener {
 
-    private ImageView vr_image;
+    private SquaredImageView vr_image;
     private TextView vr_video_title;
     private TextView vr_video_desc;
 
@@ -22,6 +26,8 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
     private Button vr_video_play;
 
     private ImageView back_home;
+
+    private VRVideo vrVideo;
 
 
     public static void openVRVideoInfoActivity(Activity activity, VRVideo vrVideo) {
@@ -42,7 +48,7 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
 
     private void initView() {
 
-        vr_image = (ImageView) findViewById(R.id.vr_image);
+        vr_image = (SquaredImageView) findViewById(R.id.vr_image);
         vr_video_title = (TextView) findViewById(R.id.vr_video_title);
         vr_video_desc = (TextView) findViewById(R.id.vr_video_desc);
 
@@ -58,19 +64,30 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initData() {
-        VRVideo vrVideo = getIntent().getParcelableExtra("VRVideo");
+        vrVideo = getIntent().getParcelableExtra("VRVideo");
         vr_video_title.setText(vrVideo.title);
         vr_video_desc.setText(vrVideo.desc);
+
+        Picasso.with(this).load(vrVideo.pic)
+                .placeholder(R.drawable.default_image)
+                .error(R.drawable.default_image)
+                .into(vr_image);
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_home:
+                finish();
                 break;
             case R.id.vr_video_download:
+
                 break;
             case R.id.vr_video_play:
+                if (vrVideo!=null){
+                    MD360PlayerActivity.startVideo(VRVideoInfoActivity.this, Uri.parse(vrVideo.file));
+                }
                 break;
             default:
                 break;

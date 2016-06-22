@@ -134,7 +134,7 @@ public class GalleryImageActivity extends BaseActivity implements OnGestureListe
 			float velocityY) {		
 		if (e1.getX() - e2.getX() > 120) {      
 			if(pager_num == 5) {
-				Intent intent = new Intent(GalleryImageActivity.this,EcmobileMainActivity.class);
+				Intent intent = new Intent(GalleryImageActivity.this,VRVideoListActivity.class);
 				startActivity(intent);
 				finish();
 				editor.putBoolean("isFirstRun", false);

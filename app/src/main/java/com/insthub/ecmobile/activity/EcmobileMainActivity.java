@@ -17,9 +17,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
 import android.annotation.TargetApi;
-import android.app.FragmentManager;
 import android.os.Build;
-import com.insthub.ecmobile.fragment.D0_CategoryFragment;
 import org.json.JSONException;
 import org.json.JSONObject;
 
