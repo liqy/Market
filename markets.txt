@@ -1,0 +1,8 @@
+#huawei
+#xiaomi
+#baidu
+#yingyongbao
+#anzhi
+#360
+TipSee
+#-Pmarket=markets.txt clean apkRelease

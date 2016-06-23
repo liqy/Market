@@ -1,20 +1,50 @@
 apply plugin: 'com.android.application'
+apply plugin: 'packer'
+
+packer {
+    checkSigningConfig = true
+    checkZipAlign = true
+    archiveNameFormat = '${appPkg}-${flavorName}-${buildType}-v${versionName}-${versionCode}'
+    archiveOutput = file(new File(project.rootProject.buildDir.path, "myapks"))
+}
 
 android {
     compileSdkVersion 22
     buildToolsVersion '23.0.2'
+
+    compileOptions.encoding = "UTF-8"
+
     defaultConfig {
         applicationId "com.insthub.ecmobile"
         minSdkVersion 15
         targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
     }
+
+    signingConfigs {
+        release {
+            storeFile file("android.keystore")
+            storePassword KEYSTORE_PASSWORD
+            keyAlias "xuj"
+            keyPassword KEY_PASSWORD
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
     productFlavors {
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
     }
 }
 
@@ -35,6 +65,9 @@ dependencies {
     compile files('libs/UPPayAssistEx.jar')
     compile files('libs/UPPayPluginExPro.jar')
     compile files('libs/weibosdkcore.jar')
+
+    compile 'com.mcxiaoke.gradle:packer-helper:1.0.5'
+
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
