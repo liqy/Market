@@ -351,9 +351,11 @@
             android:screenOrientation="landscape" />
         <activity
             android:name="tv.tipsee.vr.VRVideoListActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:screenOrientation="portrait" />
         <activity
             android:name="tv.tipsee.vr.VRVideoInfoActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:screenOrientation="portrait" />
     </application>
 

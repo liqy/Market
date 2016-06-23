@@ -48,7 +48,7 @@ public class VRVideoListActivity extends BaseActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         Transformation transformation = new RoundedTransformationBuilder()
-                .cornerRadiusDp(8)
+                .cornerRadiusDp(4)
                 .borderColor(Color.BLACK)
                 .borderWidthDp(1)
                 .oval(false)

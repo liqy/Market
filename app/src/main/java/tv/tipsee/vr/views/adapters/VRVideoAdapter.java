@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tv.tipsee.vr.models.VRVideo;
+import tv.tipsee.vr.views.widgets.SquaredImageView;
 
 /**
  * Created by liqy on 2016/6/20.
@@ -77,11 +78,11 @@ public class VRVideoAdapter extends RecyclerView.Adapter<VRVideoAdapter.ViewHold
     //自定义的ViewHolder，持有每个Item的的所有界面元素
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView vr_image_thumb;
+        public SquaredImageView vr_image_thumb;
 
         public ViewHolder(View view) {
             super(view);
-            vr_image_thumb = (ImageView) view.findViewById(R.id.vr_image_thumb);
+            vr_image_thumb = (SquaredImageView) view.findViewById(R.id.vr_image_thumb);
         }
     }
 }

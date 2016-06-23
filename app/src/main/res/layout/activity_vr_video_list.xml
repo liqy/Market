@@ -3,21 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/vr_video_list_bg"
     tools:context="tv.tipsee.vr.VRVideoListActivity">
 
 
     <RelativeLayout
         android:id="@+id/vr_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#040f0f">
+        android:layout_height="48dp"
+        android:background="#e0040f0f">
 
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="@drawable/action_bar_title_logo" />
+            android:src="@drawable/action_bar_title_logo" />
 
 
         <ImageView
@@ -35,7 +36,6 @@
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/vr_bar"
-        android:background="@drawable/vr_video_list_bg" />
+        android:layout_below="@+id/vr_bar" />
 
 </RelativeLayout>
