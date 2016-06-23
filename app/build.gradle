@@ -82,4 +82,7 @@ dependencies {
 
     compile 'com.wuxiaolong.androidutils:androidutils:1.0.2'
 
+    compile 'com.github.jorgecastilloprz:fabprogresscircle:1.01@aar'
+
+
 }
