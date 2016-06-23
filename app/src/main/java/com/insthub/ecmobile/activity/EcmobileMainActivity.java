@@ -65,7 +65,8 @@ public class EcmobileMainActivity extends FragmentActivity
 	    
 	    Intent intent = new Intent();
 		intent.setAction("com.BeeFramework.NetworkStateService");
-		startService(intent);
+        intent.setPackage(this.getPackageName());
+        startService(intent);
 		
 		if(getIntent().getStringExtra(CUSTOM_CONTENT) != null) {
 			pushIntent(getIntent().getStringExtra(CUSTOM_CONTENT));
