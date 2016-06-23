@@ -4,11 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.insthub.ecmobile.R;
 import com.liulishuo.filedownloader.BaseDownloadTask;
@@ -16,6 +17,9 @@ import com.liulishuo.filedownloader.FileDownloadSampleListener;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
+
 import tv.tipsee.vr.models.VRVideo;
 import tv.tipsee.vr.player.MD360PlayerActivity;
 import tv.tipsee.vr.views.widgets.SquaredImageView;
@@ -62,7 +66,6 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
         vr_video_download.setOnClickListener(this);
         vr_video_play.setOnClickListener(this);
         back_home.setOnClickListener(this);
-
     }
 
     private void initData() {
@@ -74,20 +77,41 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
                 .placeholder(R.drawable.default_image)
                 .error(R.drawable.default_image)
                 .into(vr_image);
+
+        File vrFile = new File(getVideoFilePath(vrVideo.file));
+
+        if (vrFile.exists()) {
+            vr_video_download.setText("已下载");
+        }else {
+            vr_video_download.setText("下载");
+        }
     }
 
     @Override
     public void onClick(View v) {
+        File vrFile = new File(getVideoFilePath(vrVideo.file));
         switch (v.getId()) {
             case R.id.back_home:
                 finish();
                 break;
             case R.id.vr_video_download:
-                createDownloadTask(vrVideo.file).start();
+                if (!vrFile.exists()){
+                    createDownloadTask(vrVideo.file).start();
+                }
                 break;
             case R.id.vr_video_play:
                 if (vrVideo != null) {
-                    MD360PlayerActivity.startVideo(VRVideoInfoActivity.this, Uri.parse(vrVideo.file));
+                    if (TextUtils.isEmpty(vrVideo.file)) {
+                        Toast.makeText(VRVideoInfoActivity.this, "播放文件不存在", Toast.LENGTH_SHORT).show();
+                    } else {//TODO 下载
+                        if (vrFile.exists()) {
+                            MD360PlayerActivity.startVideo(VRVideoInfoActivity.this, getVrUri(vrVideo.file));
+                            Toast.makeText(VRVideoInfoActivity.this, "文件已下载", Toast.LENGTH_SHORT).show();
+                        } else {
+                            MD360PlayerActivity.startVideo(VRVideoInfoActivity.this, Uri.parse(vrVideo.file));
+                            Toast.makeText(VRVideoInfoActivity.this, "在线播放", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
                 break;
             default:
@@ -112,7 +136,7 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
                     @Override
                     protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
                         super.progress(task, soFarBytes, totalBytes);
-
+                        vr_video_download.setText("下载中");
                     }
 
                     @Override
@@ -128,7 +152,7 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
                     @Override
                     protected void completed(BaseDownloadTask task) {
                         super.completed(task);
-                        Log.i(getLocalClassName(), "OK");
+                        vr_video_download.setText("已下载");
                         MD360PlayerActivity.startVideo(VRVideoInfoActivity.this, getVrUri(vrVideo.file));
                     }
 
