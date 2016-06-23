@@ -124,7 +124,7 @@
 <string name="memorymessageactivity_mem">进程占用内存</string>
 <string name="memorymessageactivity_process">进程名</string>
 <string name="life_cycle">activity生存周期</string>
-<string name="exit_again">再按一次退出</string>
+<string name="exit_again">再按一次退出商城</string>
 <string name="exit_debug_mode">确认退出debug模式？</string>
 <string name="add_name">请填写姓名</string>
 <string name="add_tel">请填写电话号码</string>
@@ -231,7 +231,7 @@
 <string name="tips_pull_refresh">下拉更新</string>
 <string name="tips_release_refresh">释放刷新</string>
 <string name="tips_last_update">最后更新：</string>
-<string name="again_exit">再按一次退出APP</string>
+<string name="again_exit">再按一次退出商城</string>
 <string name="xlistview_header_hint_normal">下拉刷新</string>
 <string name="xlistview_header_hint_ready">释放刷新</string>
 <string name="xlistview_header_hint_loading">正在加载…</string>
