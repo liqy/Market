@@ -16,12 +16,6 @@ package com.insthub.ecmobile;
 import android.graphics.Bitmap;
 import com.insthub.BeeFramework.BeeFrameworkApp;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.log.LoggerInterceptor;
-
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.OkHttpClient;
 
 
 public class EcmobileApp extends BeeFrameworkApp
@@ -50,14 +44,5 @@ public class EcmobileApp extends BeeFrameworkApp
                 .cacheOnDisc(true)							// 设置下载的图片是否缓存在SD卡中
                         //.displayer(new RoundedBitmapDisplayer(30))	// 设置成圆角图片
                 .build();
-
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(new LoggerInterceptor("OKHTTP"))
-                .connectTimeout(10000L, TimeUnit.MILLISECONDS)
-                .readTimeout(10000L, TimeUnit.MILLISECONDS)
-                //其他配置
-                .build();
-
-        OkHttpUtils.initClient(okHttpClient);
     }
 }

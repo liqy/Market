@@ -45,9 +45,5 @@ dependencies {
 
     compile 'com.makeramen:roundedimageview:2.2.1'
 //    compile 'com.github.fenjuly:ArrowDownloadButton:9e15b85e8a'
-
-    compile 'cn.aigestudio.downloader:Downloader:1.4.3'
-    compile 'com.zhy:okhttputils:2.6.2'
-
-
+    compile 'com.liulishuo.filedownloader:library:0.3.2'
 }
