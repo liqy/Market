@@ -15,7 +15,7 @@ android {
     compileOptions.encoding = "UTF-8"
 
     defaultConfig {
-        applicationId "com.insthub.ecmobile"
+        applicationId 'tv.tipsee.vr'
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1
@@ -65,9 +65,7 @@ dependencies {
     compile files('libs/UPPayAssistEx.jar')
     compile files('libs/UPPayPluginExPro.jar')
     compile files('libs/weibosdkcore.jar')
-
     compile 'com.mcxiaoke.gradle:packer-helper:1.0.5'
-
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
@@ -75,14 +73,9 @@ dependencies {
     compile 'tv.danmaku.ijk.media:ijkplayer-java:0.5.1'
     compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.5.1'
     compile 'com.github.ashqal:MD360Player4Android:1.4.0'
-
     compile 'com.makeramen:roundedimageview:2.2.1'
-//    compile 'com.github.fenjuly:ArrowDownloadButton:9e15b85e8a'
+    //    compile 'com.github.fenjuly:ArrowDownloadButton:9e15b85e8a'
     compile 'com.liulishuo.filedownloader:library:0.3.2'
-
     compile 'com.wuxiaolong.androidutils:androidutils:1.0.2'
-
     compile 'com.github.jorgecastilloprz:fabprogresscircle:1.01@aar'
-
-
 }
