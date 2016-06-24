@@ -89,6 +89,13 @@ public abstract class MD360PlayerActivity extends Activity {
             }
         });
 
+        findViewById(R.id.back_home).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
 
     @Override
@@ -100,10 +107,10 @@ public abstract class MD360PlayerActivity extends Activity {
         String text = null;
         switch (mVRLibrary.getDisplayMode()){
             case MDVRLibrary.DISPLAY_MODE_NORMAL:
-                text = "NORMAL";
+                text = "标准模式";
                 break;
             case MDVRLibrary.DISPLAY_MODE_GLASS:
-                text = "GLASS";
+                text = "眼镜模式";
                 break;
         }
         if (!TextUtils.isEmpty(text)) button.setText(text);
@@ -113,13 +120,13 @@ public abstract class MD360PlayerActivity extends Activity {
         String text = null;
         switch (mVRLibrary.getInteractiveMode()){
             case MDVRLibrary.INTERACTIVE_MODE_MOTION:
-                text = "MOTION";
+                text = "手势";
                 break;
             case MDVRLibrary.INTERACTIVE_MODE_TOUCH:
-                text = "TOUCH";
+                text = "触摸";
                 break;
             case MDVRLibrary.INTERACTIVE_MODE_MOTION_WITH_TOUCH:
-                text = "M & T";
+                text = "手势 & 触摸";
                 break;
         }
         if (!TextUtils.isEmpty(text)) button.setText(text);

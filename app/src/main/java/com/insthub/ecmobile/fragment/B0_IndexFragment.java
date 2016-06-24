@@ -101,7 +101,14 @@ public class B0_IndexFragment extends BaseFragment implements BusinessResponse,X
         View mainView = inflater.inflate(R.layout.b0_index,null);
         
         back = (ImageView) mainView.findViewById(R.id.top_view_back);
-        back.setVisibility(View.GONE);
+        back.setVisibility(View.VISIBLE);
+        back.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+
         title = (TextView) mainView.findViewById(R.id.top_view_text);
         Resources resource = this.getResources();
         String ecmobileStr=resource.getString(R.string.ecmobile);

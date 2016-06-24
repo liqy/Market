@@ -68,7 +68,8 @@ public class GalleryImageActivity extends BaseActivity implements OnGestureListe
 		shared = getSharedPreferences("userInfo", 0); 
 		editor = shared.edit();
         
-        boolean isFirstRun = shared.getBoolean("isFirstRun", true);  
+//        boolean isFirstRun = shared.getBoolean("isFirstRun", true);
+        boolean isFirstRun =false;
         if(!isFirstRun) {
             //TODO 主页面
 //        	Intent it = new Intent(this,EcmobileMainActivity.class);

@@ -24,7 +24,7 @@ import tv.tipsee.vr.models.VRVideo;
 import tv.tipsee.vr.player.MD360PlayerActivity;
 import tv.tipsee.vr.views.widgets.SquaredImageView;
 
-public class VRVideoInfoActivity extends BaseActivity implements View.OnClickListener {
+public class  VRVideoInfoActivity extends BaseActivity implements View.OnClickListener {
 
     private SquaredImageView vr_image;
     private TextView vr_video_title;
@@ -34,6 +34,9 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
     private Button vr_video_play;
 
     private ImageView back_home;
+
+    private ImageView bar_share;
+    private ImageView bar_delete;
 
     private VRVideo vrVideo;
 
@@ -63,9 +66,15 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
 
         back_home = (ImageView) findViewById(R.id.back_home);
 
+        bar_delete=(ImageView)findViewById(R.id.bar_delete);
+        bar_share=(ImageView)findViewById(R.id.bar_share);
+
         vr_video_download.setOnClickListener(this);
         vr_video_play.setOnClickListener(this);
         back_home.setOnClickListener(this);
+
+        bar_share.setOnClickListener(this);
+        bar_delete.setOnClickListener(this);
     }
 
     private void initData() {
@@ -85,6 +94,7 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
         }else {
             vr_video_download.setText("下载");
         }
+
     }
 
     @Override
@@ -113,6 +123,10 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
                         }
                     }
                 }
+                break;
+            case R.id.bar_delete:
+                break;
+            case R.id.bar_share:
                 break;
             default:
                 break;

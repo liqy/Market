@@ -52,7 +52,7 @@ public class VideoPlayerActivity extends MD360PlayerActivity {
                     @Override
                     public void onNotSupport(int mode) {
                         String tip = mode == MDVRLibrary.INTERACTIVE_MODE_MOTION
-                                ? "onNotSupport:MOTION" : "onNotSupport:" + String.valueOf(mode);
+                                ? "不支持:手势" : "不支持:" + String.valueOf(mode);
                         Toast.makeText(VideoPlayerActivity.this, tip, Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -60,7 +60,7 @@ public class VideoPlayerActivity extends MD360PlayerActivity {
                 .gesture(new MDVRLibrary.IGestureListener() {
                     @Override
                     public void onClick(MotionEvent e) {
-                        Toast.makeText(VideoPlayerActivity.this, "onClick!", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(VideoPlayerActivity.this, "onClick!", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .build(R.id.surface_view);

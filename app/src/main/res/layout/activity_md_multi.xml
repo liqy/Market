@@ -3,54 +3,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".player.MD360PlayerActivity">
+    tools:context=".MD360PlayerActivity">
 
-   <FrameLayout
-       android:orientation="horizontal"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
-      <android.opengl.GLSurfaceView
-          android:id="@+id/surface_view"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent" />
-   </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="horizontal"
-       android:layout_margin="10dp">
-      <Button
-          android:padding="5dp"
-          android:id="@+id/button_interactive_mode_switcher"
-          android:background="@drawable/selector_button"
-          android:textColor="#FFFFFF"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent" />
-      <Button
-          android:padding="5dp"
-          android:layout_marginLeft="10dp"
-          android:id="@+id/button_display_mode_switcher"
-          android:background="@drawable/selector_button"
-          android:textColor="#FFFFFF"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent" />
+        <android.opengl.GLSurfaceView
+            android:id="@+id/surface_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
 
-      <Button
-          android:text="RESET"
-          android:padding="5dp"
-          android:layout_marginLeft="10dp"
-          android:id="@+id/button_reset"
-          android:background="@drawable/selector_button"
-          android:textColor="#FFFFFF"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent" />
-   </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-   <ProgressBar
-       android:layout_centerInParent="true"
-       android:id="@+id/progress"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/back_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/vr_video_info_back" />
+
+        <Button
+            android:id="@+id/button_interactive_mode_switcher"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/selector_button"
+            android:padding="5dp"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/button_display_mode_switcher"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/selector_button"
+            android:padding="5dp"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/button_reset"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/selector_button"
+            android:padding="5dp"
+            android:text="重播"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>
