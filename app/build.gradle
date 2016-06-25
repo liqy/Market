@@ -15,7 +15,7 @@ android {
     compileOptions.encoding = "UTF-8"
 
     defaultConfig {
-        applicationId 'tv.tipsee.vr'
+        applicationId 'com.ldy.xuj'
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1

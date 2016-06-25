@@ -21,6 +21,9 @@ public class ECMobileAppConst {
 
 	// http://shop.tipsee.tv/ecmobile/
 
+	/**
+	 * TODO
+	 */
 	public static final String SERVER_PRODUCTION = "http://shop.tipsee.tv/ecmobile/?url=";
 	public static final String SERVER_DEVELOPMENT = "http://shop.tipsee.tv/ecmobile/?url=";
 

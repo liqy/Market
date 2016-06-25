@@ -13,7 +13,7 @@ public class EcmobileManager {
 	// 获取友盟key
 	public static String getUmengKey(Context context)
     {
-        return "xxx";
+        return "576791ec67e58e9d5000080c";
 	}
 	
 	// 获取快递key
@@ -42,7 +42,7 @@ public class EcmobileManager {
 	// 获取支付宝parterID(合作者身份)
 	public static String getAlipayParterId(Context context)
     {
-        return "xxx";
+        return "2088302084236714";
 	}
 	
 	// 获取支付宝sellerID(收款账户)
@@ -54,7 +54,7 @@ public class EcmobileManager {
 	// 获取支付宝key
 	public static String getAlipayKey(Context context)
     {
-        return "xxx";
+        return "ez2uzsr54j0n0k3ee0cb6ik2tlain7jb";
 	}
 	
 	// 获取支付宝rsa_alipay_public(公钥)
@@ -96,14 +96,15 @@ public class EcmobileManager {
 	// 获取微信id
 	public static String getWeixinAppId(Context context)
     {
-        return "xxx";
+        return "wx1ed12a5e9aef47e9";
 	}
 	
 	// 获取微信key
 	public static String getWeixinAppKey(Context context)
     {
-        return "xxx";
+        return "b95336f663a47394144db79b0a9a90d9";
 	}
+
 	public static String getWeixinAppPartnerId(Context context)
 	{
 		return "xxx";
