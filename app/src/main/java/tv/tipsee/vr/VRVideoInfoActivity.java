@@ -147,9 +147,10 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
                     } else {//TODO 下载
                         if (vrFile.exists()) {
                             MD360PlayerActivity.startVideo(VRVideoInfoActivity.this, getVrUri(vrVideo.file));
-                            Toast.makeText(VRVideoInfoActivity.this, "文件已下载", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(VRVideoInfoActivity.this, "文件已下载", Toast.LENGTH_SHORT).show();
                         } else {//下载完毕自动播放
-                            downloadId = createDownloadTask(vrVideo.file, 1).start();
+//                            downloadId = createDownloadTask(vrVideo.file, 1).start();
+                            MD360PlayerActivity.startVideo(VRVideoInfoActivity.this, Uri.parse(vrVideo.file));
                         }
                     }
                 }
@@ -234,7 +235,8 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
                         super.completed(task);
                         vr_video_download.setText("已下载");
                         if (from == 0) {
-                            Toast.makeText(VRVideoInfoActivity.this, "下载完毕,请点击观看", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(VRVideoInfoActivity.this, "下载完毕,请点击观看", Toast.LENGTH_SHORT).show();
+                            MD360PlayerActivity.startVideo(VRVideoInfoActivity.this, getVrUri(vrVideo.file));
                         } else {
                             MD360PlayerActivity.startVideo(VRVideoInfoActivity.this, getVrUri(vrVideo.file));
                         }
