@@ -34,6 +34,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
@@ -106,8 +107,8 @@ public class ShareActivity extends Activity implements IWeiboHandler.Response
         imageLoader.init(ImageLoaderConfiguration.createDefault(this));
         sinaWeibo = (LinearLayout)findViewById(R.id.sina_weibo);
 
-        if(EcmobileManager.getSinaKey(this) == null || EcmobileManager.getSinaSecret(this) == null
-        		|| EcmobileManager.getSinaCallback(this) == null) {
+        if(TextUtils.isEmpty(EcmobileManager.getSinaKey(this))||TextUtils.isEmpty( EcmobileManager.getSinaSecret(this))
+        		|| TextUtils.isEmpty(EcmobileManager.getSinaCallback(this))) {
         	sinaWeibo.setVisibility(View.GONE);
         }
         
@@ -116,6 +117,7 @@ public class ShareActivity extends Activity implements IWeiboHandler.Response
     		weiboAPI=WeiboShareSDK.createWeiboAPI(ShareActivity.this, EcmobileManager.getSinaKey(ShareActivity.this));
     		weiboAPI.registerApp();
     	}
+
         sinaWeibo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -146,9 +148,11 @@ public class ShareActivity extends Activity implements IWeiboHandler.Response
         });
 
         tencentWeixin = (LinearLayout)findViewById(R.id.tencent_weixin);
+
         if(EcmobileManager.getWeixinAppId(this) == null) {
         	tencentWeixin.setVisibility(View.GONE);
         }
+
         tencentWeixin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
