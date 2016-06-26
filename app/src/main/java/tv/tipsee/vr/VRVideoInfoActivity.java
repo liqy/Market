@@ -149,7 +149,7 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
                             MD360PlayerActivity.startVideo(VRVideoInfoActivity.this, getVrUri(vrVideo.file));
                             Toast.makeText(VRVideoInfoActivity.this, "文件已下载", Toast.LENGTH_SHORT).show();
                         } else {//下载完毕自动播放
-                            createDownloadTask(vrVideo.file, 1).start();
+                            downloadId = createDownloadTask(vrVideo.file, 1).start();
                         }
                     }
                 }
@@ -293,5 +293,11 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onRestart() {
         super.onRestart();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        FileDownloader.getImpl().pause(downloadId);
     }
 }
