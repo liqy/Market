@@ -62,6 +62,8 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
     private static final int THUMB_SIZE = 150;
     private IWXAPI api;
 
+    private int downloadId;
+
     public static void openVRVideoInfoActivity(Activity activity, VRVideo vrVideo) {
         Intent intent = new Intent(activity, VRVideoInfoActivity.class);
         intent.putExtra("VRVideo", vrVideo);
@@ -90,7 +92,7 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
         bar_delete = (ImageView) findViewById(R.id.bar_delete);
         bar_share = (ImageView) findViewById(R.id.bar_share);
 
-        donutProgress=(DonutProgress)findViewById(R.id.donut_progress);
+        donutProgress = (DonutProgress) findViewById(R.id.donut_progress);
 
         vr_video_download.setOnClickListener(this);
         vr_video_play.setOnClickListener(this);
@@ -133,7 +135,7 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.vr_video_download:
                 if (!vrFile.exists()) {
-                    createDownloadTask(vrVideo.file, 0).start();
+                    downloadId = createDownloadTask(vrVideo.file, 0).start();
                 } else {
                     Toast.makeText(VRVideoInfoActivity.this, "下载完毕,请点击观看", Toast.LENGTH_SHORT).show();
                 }
@@ -252,11 +254,9 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
         sheet = new BottomSheet.Builder(this).sheet(R.menu.menu_share).listener(new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (which==0){
-                    Toast.makeText(VRVideoInfoActivity.this, "分享给好友", Toast.LENGTH_SHORT).show();
+                if (which == R.id.share_session) {
                     shareWebPage(false);
-                }else if (which!=0){
-                    Toast.makeText(VRVideoInfoActivity.this, "分享到朋友圈", Toast.LENGTH_SHORT).show();
+                } else if (which == R.id.share_timeline) {
                     shareWebPage(true);
                 }
 
@@ -265,7 +265,7 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
         return sheet;
     }
 
-    private void shareWebPage(boolean isTimeLine){
+    private void shareWebPage(boolean isTimeLine) {
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = "http://www.baidu.com";
         WXMediaMessage msg = new WXMediaMessage(webpage);
