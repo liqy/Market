@@ -1,9 +1,14 @@
 package tv.tipsee.vr;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -11,13 +16,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cocosw.bottomsheet.BottomSheet;
 import com.github.lzyzsd.circleprogress.DonutProgress;
+import com.insthub.ecmobile.EcmobileManager;
 import com.insthub.ecmobile.R;
+import com.insthub.ecmobile.wxapi.Util;
 import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloadSampleListener;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 import com.squareup.picasso.Picasso;
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import java.io.File;
 
@@ -44,6 +57,10 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
     private MaterialDialog mMaterialDialog;
 
     private DonutProgress donutProgress;
+    private BottomSheet sheet;
+
+    private static final int THUMB_SIZE = 150;
+    private IWXAPI api;
 
     public static void openVRVideoInfoActivity(Activity activity, VRVideo vrVideo) {
         Intent intent = new Intent(activity, VRVideoInfoActivity.class);
@@ -84,6 +101,10 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initData() {
+
+        api = WXAPIFactory.createWXAPI(this, EcmobileManager.getWeixinAppId(this));
+        api.registerApp(EcmobileManager.getWeixinAppId(this));
+
         vrVideo = getIntent().getParcelableExtra("VRVideo");
         vr_video_title.setText(vrVideo.title);
         vr_video_desc.setText(vrVideo.desc);
@@ -135,7 +156,7 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
                 deleteVRVideo();
                 break;
             case R.id.bar_share:
-
+                showDialog(0);
                 break;
             default:
                 break;
@@ -223,6 +244,45 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
                         super.warn(task);
                     }
                 });
+    }
+
+    @Nullable
+    @Override
+    protected Dialog onCreateDialog(int id, Bundle args) {
+        sheet = new BottomSheet.Builder(this).sheet(R.menu.menu_share).listener(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which==0){
+                    Toast.makeText(VRVideoInfoActivity.this, "分享给好友", Toast.LENGTH_SHORT).show();
+                    shareWebPage(false);
+                }else if (which!=0){
+                    Toast.makeText(VRVideoInfoActivity.this, "分享到朋友圈", Toast.LENGTH_SHORT).show();
+                    shareWebPage(true);
+                }
+
+            }
+        }).build();
+        return sheet;
+    }
+
+    private void shareWebPage(boolean isTimeLine){
+        WXWebpageObject webpage = new WXWebpageObject();
+        webpage.webpageUrl = "http://www.baidu.com";
+        WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.title = "WebPage Title WebPage Title WebPage Title WebPage Title WebPage Title WebPage Title WebPage Title WebPage Title WebPage Title Very Long Very Long Very Long Very Long Very Long Very Long Very Long Very Long Very Long Very Long";
+        msg.description = "WebPage Description WebPage Description WebPage Description WebPage Description WebPage Description WebPage Description WebPage Description WebPage Description WebPage Description Very Long Very Long Very Long Very Long Very Long Very Long Very Long";
+        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.drawable.icon);
+        msg.thumbData = Util.bmpToByteArray(thumb, true);
+
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = buildTransaction("webpage");
+        req.message = msg;
+        req.scene = isTimeLine ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
+        api.sendReq(req);
+    }
+
+    private String buildTransaction(final String type) {
+        return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
     }
 
     @Override
