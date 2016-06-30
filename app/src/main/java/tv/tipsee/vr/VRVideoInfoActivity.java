@@ -99,6 +99,7 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
         back_home.setOnClickListener(this);
 
         bar_share.setOnClickListener(this);
+        bar_share.setVisibility(View.GONE);
         bar_delete.setOnClickListener(this);
     }
 

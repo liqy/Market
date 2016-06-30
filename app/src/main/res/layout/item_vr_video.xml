@@ -7,7 +7,7 @@
     android:paddingRight="12dp"
     android:paddingTop="8dp">
 
-    <tv.tipsee.vr.views.widgets.SquaredImageView
+    <ImageView
         android:id="@+id/vr_image_thumb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

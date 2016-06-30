@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.insthub.ecmobile.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
+import com.wuxiaolong.androidutils.library.DisplayMetricsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,11 +79,15 @@ public class VRVideoAdapter extends RecyclerView.Adapter<VRVideoAdapter.ViewHold
     //自定义的ViewHolder，持有每个Item的的所有界面元素
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public SquaredImageView vr_image_thumb;
+        public ImageView vr_image_thumb;
 
         public ViewHolder(View view) {
             super(view);
-            vr_image_thumb = (SquaredImageView) view.findViewById(R.id.vr_image_thumb);
+            vr_image_thumb = (ImageView) view.findViewById(R.id.vr_image_thumb);
+            ViewGroup.LayoutParams params=vr_image_thumb.getLayoutParams();
+            params.width= DisplayMetricsUtil.getScreenWidth(view.getContext())-DisplayMetricsUtil.dip2px(view.getContext(),24);
+            params.height= (int) (params.width/1.8);
+
         }
     }
 }
