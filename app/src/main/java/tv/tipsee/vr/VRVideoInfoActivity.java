@@ -62,7 +62,8 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
     private static final int THUMB_SIZE = 150;
     private IWXAPI api;
 
-    private int downloadId;
+    private BaseDownloadTask downloadTask;
+    private int downloadId = -1;
 
     public static void openVRVideoInfoActivity(Activity activity, VRVideo vrVideo) {
         Intent intent = new Intent(activity, VRVideoInfoActivity.class);
@@ -135,8 +136,9 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.vr_video_download:
-                if (!vrFile.exists()) {
-                    downloadId = createDownloadTask(vrVideo.file, 0).start();
+                if (!vrFile.exists() && !TextUtils.isEmpty(vrVideo.file)) {
+                    downloadTask = createDownloadTask(vrVideo.file, 0);
+                    downloadId = downloadTask.start();
                 } else {
                     Toast.makeText(VRVideoInfoActivity.this, "下载完毕,请点击观看", Toast.LENGTH_SHORT).show();
                 }
@@ -148,9 +150,7 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
                     } else {//TODO 下载
                         if (vrFile.exists()) {
                             MD360PlayerActivity.startVideo(VRVideoInfoActivity.this, getVrUri(vrVideo.file));
-//                            Toast.makeText(VRVideoInfoActivity.this, "文件已下载", Toast.LENGTH_SHORT).show();
                         } else {//下载完毕自动播放
-//                            downloadId = createDownloadTask(vrVideo.file, 1).start();
                             MD360PlayerActivity.startVideo(VRVideoInfoActivity.this, Uri.parse(vrVideo.file));
                         }
                     }
@@ -223,12 +223,14 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
                     protected void error(BaseDownloadTask task, Throwable e) {
                         super.error(task, e);
                         donutProgress.setVisibility(View.GONE);
+                        vr_video_download.setText("下载");
                     }
 
                     @Override
                     protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
                         super.paused(task, soFarBytes, totalBytes);
-
+                        donutProgress.setVisibility(View.GONE);
+                        vr_video_download.setText("下载");
                     }
 
                     @Override
@@ -236,7 +238,6 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
                         super.completed(task);
                         vr_video_download.setText("已下载");
                         if (from == 0) {
-//                            Toast.makeText(VRVideoInfoActivity.this, "下载完毕,请点击观看", Toast.LENGTH_SHORT).show();
                             MD360PlayerActivity.startVideo(VRVideoInfoActivity.this, getVrUri(vrVideo.file));
                         } else {
                             MD360PlayerActivity.startVideo(VRVideoInfoActivity.this, getVrUri(vrVideo.file));
@@ -289,18 +290,29 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
+        if (downloadId > 0 && downloadTask != null) {
+            FileDownloader.getImpl().pause(downloadId);
+        }
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
+    protected void onResume() {
+        super.onResume();
+        if (downloadId > 0 && downloadTask != null) {
+            downloadId = downloadTask.start();
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        FileDownloader.getImpl().pause(downloadId);
+        if (downloadId > 0 && downloadTask != null) {
+            if (downloadTask.getSoFarBytes() < downloadTask.getTotalBytes()) {
+                new File(getVideoFilePath(vrVideo.file)).delete();
+            }
+        }
+
     }
 }
