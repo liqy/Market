@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.asha.vrlib.MDVRLibrary;
 import com.insthub.ecmobile.R;
@@ -39,6 +40,8 @@ public abstract class MD360PlayerActivity extends Activity {
 
     private MDVRLibrary mVRLibrary;
 
+    protected LinearLayout nav_layout;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +69,8 @@ public abstract class MD360PlayerActivity extends Activity {
             }
         });
         updateInteractiveModeText(interactiveModeSwitcher);
+
+        nav_layout=(LinearLayout)findViewById(R.id.nav_layout);
 
         // display mode switcher
         final Button displayModeSwitcher = (Button) findViewById(R.id.button_display_mode_switcher);

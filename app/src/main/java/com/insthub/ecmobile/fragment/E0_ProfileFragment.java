@@ -181,6 +181,7 @@ public class E0_ProfileFragment extends BaseFragment implements IXListViewListen
 		address_manage.setOnClickListener(this);
 		name.setOnClickListener(this);
         help.setOnClickListener(this);
+		help.setVisibility(View.GONE);
 
         uid = shared.getString("uid", "");
 		File files = new File(getActivity().getCacheDir()+"/ECMobile/cache"+"/"+uid+"-temp.jpg");

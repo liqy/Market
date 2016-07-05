@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.Surface;
+import android.view.View;
 import android.widget.Toast;
 
 import com.asha.vrlib.MDVRLibrary;
@@ -18,6 +19,7 @@ import tv.danmaku.ijk.media.player.IMediaPlayer;
 public class VideoPlayerActivity extends MD360PlayerActivity {
 
     private MediaPlayerWrapper mMediaPlayerWrapper = new MediaPlayerWrapper();
+    private int clickCount = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,7 @@ public class VideoPlayerActivity extends MD360PlayerActivity {
         });
 
         Uri uri = getUri();
-        if (uri != null){
+        if (uri != null) {
             mMediaPlayerWrapper.openRemoteFile(uri.toString());
             mMediaPlayerWrapper.prepare();
         }
@@ -57,10 +59,21 @@ public class VideoPlayerActivity extends MD360PlayerActivity {
                     }
                 })
                 .pinchEnabled(true)
-                .gesture(new MDVRLibrary.IGestureListener() {
+                .gesture(new MDVRLibrary.IGestureListener() {//点击
                     @Override
                     public void onClick(MotionEvent e) {
-//                        Toast.makeText(VideoPlayerActivity.this, "onClick!", Toast.LENGTH_SHORT).show();
+                        if (clickCount == 0) {
+                            clickCount = 1;
+                        } else if (clickCount == 1) {
+                            clickCount = 0;
+                            if (nav_layout!=null){
+                                if (nav_layout.isShown()){
+                                    nav_layout.setVisibility(View.GONE);
+                                }else {
+                                    nav_layout.setVisibility(View.VISIBLE);
+                                }
+                            }
+                        }
                     }
                 })
                 .build(R.id.surface_view);
