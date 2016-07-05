@@ -120,7 +120,7 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
 
         File vrFile = new File(getVideoFilePath(vrVideo.file));
 
-        if (vrFile.exists()) {
+        if (!TextUtils.isEmpty(vrVideo.file) && vrFile.exists()) {
             vr_video_download.setText("已下载");
         } else {
             vr_video_download.setText("下载");
@@ -224,6 +224,7 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
                         super.error(task, e);
                         donutProgress.setVisibility(View.GONE);
                         vr_video_download.setText("下载");
+                        new File(getVideoFilePath(vrVideo.file)).delete();
                     }
 
                     @Override
@@ -231,6 +232,7 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
                         super.paused(task, soFarBytes, totalBytes);
                         donutProgress.setVisibility(View.GONE);
                         vr_video_download.setText("下载");
+                        new File(getVideoFilePath(vrVideo.file)).delete();
                     }
 
                     @Override
@@ -248,6 +250,7 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
                     @Override
                     protected void warn(BaseDownloadTask task) {
                         super.warn(task);
+                        new File(getVideoFilePath(vrVideo.file)).delete();
                     }
                 });
     }
@@ -297,22 +300,4 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (downloadId > 0 && downloadTask != null) {
-            downloadId = downloadTask.start();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (downloadId > 0 && downloadTask != null) {
-            if (downloadTask.getSoFarBytes() < downloadTask.getTotalBytes()) {
-                new File(getVideoFilePath(vrVideo.file)).delete();
-            }
-        }
-
-    }
 }
