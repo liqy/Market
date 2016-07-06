@@ -16,16 +16,21 @@ package com.insthub.ecmobile;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.external.alipay.Constant;
 import com.insthub.BeeFramework.BeeFrameworkApp;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.util.FileDownloadHelper;
 import com.liulishuo.filedownloader.util.FileDownloadLog;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
+import java.io.IOException;
 import java.net.Proxy;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import tv.tipsee.vr.utils.Constants;
+import tv.tipsee.vr.utils.FileUtility;
+import tv.tipsee.vr.utils.SDCardUtils;
 
 
 public class EcmobileApp extends BeeFrameworkApp {
@@ -59,6 +64,13 @@ public class EcmobileApp extends BeeFrameworkApp {
     }
 
     private void initDownLoad() {
+
+        //创建下载目录
+        try {
+            FileUtility.makeDirectory(SDCardUtils.getTipSeePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         Log.d(getPackageName(), "FileDownloader");
 

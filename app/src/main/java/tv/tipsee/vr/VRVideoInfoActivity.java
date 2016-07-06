@@ -24,7 +24,6 @@ import com.insthub.ecmobile.wxapi.Util;
 import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloadSampleListener;
 import com.liulishuo.filedownloader.FileDownloader;
-import com.liulishuo.filedownloader.util.FileDownloadUtils;
 import com.squareup.picasso.Picasso;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
@@ -37,6 +36,7 @@ import java.io.File;
 import me.drakeet.materialdialog.MaterialDialog;
 import tv.tipsee.vr.models.VRVideo;
 import tv.tipsee.vr.player.MD360PlayerActivity;
+import tv.tipsee.vr.utils.SDCardUtils;
 import tv.tipsee.vr.views.widgets.SquaredImageView;
 
 public class VRVideoInfoActivity extends BaseActivity implements View.OnClickListener {
@@ -98,7 +98,6 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
         vr_video_download.setOnClickListener(this);
         vr_video_play.setOnClickListener(this);
         back_home.setOnClickListener(this);
-
         bar_share.setOnClickListener(this);
         bar_share.setVisibility(View.GONE);
         bar_delete.setOnClickListener(this);
@@ -108,24 +107,14 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
 
         api = WXAPIFactory.createWXAPI(this, EcmobileManager.getWeixinAppId(this));
         api.registerApp(EcmobileManager.getWeixinAppId(this));
-
         vrVideo = getIntent().getParcelableExtra("VRVideo");
         vr_video_title.setText(vrVideo.title);
         vr_video_desc.setText(vrVideo.desc);
-
         Picasso.with(this).load(vrVideo.pic)
                 .placeholder(R.drawable.default_image)
                 .error(R.drawable.default_image)
                 .into(vr_image);
-
-        File vrFile = new File(getVideoFilePath(vrVideo.file));
-
-        if (!TextUtils.isEmpty(vrVideo.file) && vrFile.exists()) {
-            vr_video_download.setText("已下载");
-        } else {
-            vr_video_download.setText("下载");
-        }
-
+        vr_video_download.setText("下载");
     }
 
     @Override
@@ -136,11 +125,9 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.vr_video_download:
-                if (!vrFile.exists() && !TextUtils.isEmpty(vrVideo.file)) {
+                if (!TextUtils.isEmpty(vrVideo.file)) {
                     downloadTask = createDownloadTask(vrVideo.file, 0);
                     downloadId = downloadTask.start();
-                } else {
-                    Toast.makeText(VRVideoInfoActivity.this, "下载完毕,请点击观看", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.vr_video_play:
@@ -200,7 +187,7 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
     }
 
     private String getVideoFilePath(String url) {
-        return FileDownloadUtils.getDefaultSaveRootPath() + url.substring(url.lastIndexOf("/"));
+        return SDCardUtils.getTipSeePath() + url.substring(url.lastIndexOf("/"));
     }
 
     private BaseDownloadTask createDownloadTask(String url, final int from) {
@@ -232,7 +219,6 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
                         super.paused(task, soFarBytes, totalBytes);
                         donutProgress.setVisibility(View.GONE);
                         vr_video_download.setText("下载");
-                        new File(getVideoFilePath(vrVideo.file)).delete();
                     }
 
                     @Override
@@ -240,7 +226,7 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
                         super.completed(task);
                         vr_video_download.setText("已下载");
                         if (from == 0) {
-                            MD360PlayerActivity.startVideo(VRVideoInfoActivity.this, getVrUri(vrVideo.file));
+                            Toast.makeText(VRVideoInfoActivity.this, "下载完毕,请点击观看", Toast.LENGTH_SHORT).show();
                         } else {
                             MD360PlayerActivity.startVideo(VRVideoInfoActivity.this, getVrUri(vrVideo.file));
                         }
@@ -293,11 +279,10 @@ public class VRVideoInfoActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onDestroy() {
+        super.onDestroy();
         if (downloadId > 0 && downloadTask != null) {
             FileDownloader.getImpl().pause(downloadId);
         }
     }
-
 }
