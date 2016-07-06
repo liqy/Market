@@ -56,6 +56,7 @@
             android:background="@drawable/selector_button"
             android:padding="5dp"
             android:text="重播"
+            android:visibility="gone"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 
